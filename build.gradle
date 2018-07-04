@@ -1,0 +1,45 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.3.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+
+bootJar {
+    baseName = 'greenbookapi'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://repo.spring.io/libs-release'
+    }
+}
+
+sourceCompatibility = 1.8
+
+dependencies {
+    compile 'org.springframework.data:spring-data-jpa:2.0.3.RELEASE'
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.codehaus.groovy:groovy')
+    compile('org.springframework:spring-jdbc')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    /* Comment back in when DB is configured */
+    compile('com.h2database:h2')
+    compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.spockframework:spock-core:1.1-groovy-2.4-rc-3')
+    testCompile('org.spockframework:spock-spring:1.1-groovy-2.4-rc-3')
+    testCompile('org.springframework.batch:spring-batch-test')
+}
