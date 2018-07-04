@@ -34,7 +34,6 @@ class LocationController {
     @RequestMapping(value = "/retrieve", method = RequestMethod.GET,
             consumes = 'application/json')
     List<Location> retrieve(@RequestBody Map<String, Object> payload) throws Exception {
-        //Split the payload into a map for Reporter and a map for Report itself
         service.getAllLocations(payload)
     }
 }
