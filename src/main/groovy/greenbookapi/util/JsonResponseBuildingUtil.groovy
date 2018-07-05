@@ -1,6 +1,6 @@
 package greenbookapi.util
 
-import greenbookapi.domain.Location
+import greenbookapi.domain.app.Location
 
 /**
  * Created by Riley on 7/3/2018.

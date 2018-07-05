@@ -10,6 +10,8 @@ package greenbookapi.common
 class GreenBookConstants {
 
     /* Location Primary Type */
+    //static final enum BusinessType {BUSINESS, TOWN, ATTRACTION, MEDFACILITY}
+
         // Any type of business.
     static final String BUSINESS = 'Business'
         // An entire town/city/municipality.
@@ -43,8 +45,6 @@ class GreenBookConstants {
     static final String ISLAMOPHOBIA = 'Islamophobia'
     static final String CLASSISM = 'Classism'
     static final String AGEISM = 'Ageism'
-
-    /* High Alerts */
     static final String NAZI = 'Nazi Presence'
     static final String KKK = 'KKK Presence'
     static final String POLICE = 'High Police Presence'
@@ -61,5 +61,8 @@ class GreenBookConstants {
     static final String VERIFIED = 'Verified'
     static final String UNVERIFIED = 'Unverified'
     static final String SUSPICIOUS = 'Suspicious'
+
+
+
 
 }

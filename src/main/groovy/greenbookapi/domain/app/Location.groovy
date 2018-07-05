@@ -1,8 +1,14 @@
-package greenbookapi.domain
+package greenbookapi.domain.app
 
+import greenbookapi.common.GreenBookConstants
+import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
+
+import javax.persistence.Column
 import javax.persistence.Id
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
+import javax.persistence.Table
 
 /**
  * Created by Riley on 7/3/2018.
@@ -12,6 +18,7 @@ import javax.persistence.GeneratedValue
  */
 
 @Entity
+@Table(name = 'location', schema = 'greenbookapi')
 class Location {
 
     @Id
@@ -19,45 +26,46 @@ class Location {
     Long id
 
     // Name of the establishment
+    @Column(name='location_name')
     String name
 
     // Date it was first reported
+    @CreatedDate
+    @Column(name='first_report_date')
     Date firstReportDate
 
     // Date it was last reported
+    @LastModifiedDate
+    @Column(name='last_report_date')
     Date lastReportDate
 
     // Only necessary for Businesses/Med Facilities/Attractions location types
     // Consists of Number, Street, and apt/similar
+    @Column(name='address')
     String address
 
     // Necessary for all location types
+    @Column(name='city')
     String city
+    @Column(name='state')
     String state
+    @Column(name='zip_code')
     String zipCode
 
     // How many ppl reported it?
-    int amtReported = 0
-
-    // To make sure one person isn't multi-reporting, store IDs
-    // of ppl who have reported this
-    List<String> reporters = new ArrayList<>()
+    @Column(name='amt_reported')
+    int amtReported = 1
 
     // What kind of location are you reporting?
+    @Column(name='primary_type')
     String primaryType
 
     // Necessary for locations with primary type as Business
+    @Column(name='secondary_type')
     String secondaryType
 
-    // Offenders or high alerts must be chosen for non-town primary types
-    List<String> offenders = new ArrayList<>()
-    List<String> highAlerts = new ArrayList<>()
-
-    // Required only for primary type Town
-    List<String> townAlerts = new ArrayList<>()
-
-    // Not required
-    String confidenceTag
+    @Column(name='confidence')
+    String confidenceTag = GreenBookConstants.UNVERIFIED
 
     protected Location(){
 
@@ -76,11 +84,7 @@ class Location {
         primaryType = determinePrimaryBusinessType(type)
     }
 
-    private String determinePrimaryBusinessType(String type) {
+    static private String determinePrimaryBusinessType(String type) {
         return type
-    }
-
-    private void addReporter(String reporterId) {
-        reporters.add(reporterId)
     }
 }
