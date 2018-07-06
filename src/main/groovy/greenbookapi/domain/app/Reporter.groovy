@@ -36,20 +36,27 @@ class Reporter {
     @Column(name='state')
     String state
 
-    @Column(name='zip_code')
-    String zipCode
+    @Column(name='country')
+    String country
 
     @Column(name='confidence')
     String tag = GreenBookConstants.UNVERIFIED
 
     protected Reporter() {}
 
-    protected Reporter(String phoneNum, Date date, String pcc, String city, String state, String zip) {
+    Reporter(String phoneNum, Date date, String pcc, String city, String state) {
         this.id = phoneNum
         this.dateCreated = date
         this.phoneCountryCode = pcc
         this.city = city
         this.state = state
-        this.zipCode = zip
+        this.country = 'US'
+    }
+
+    Reporter(String phoneNum, Date date, String pcc, String country) {
+        this.id = phoneNum
+        this.dateCreated = date
+        this.phoneCountryCode = pcc
+        this.country = country
     }
 }

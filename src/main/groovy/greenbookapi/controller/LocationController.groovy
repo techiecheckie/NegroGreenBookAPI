@@ -1,7 +1,10 @@
 package greenbookapi.controller
 
 import greenbookapi.domain.app.Location
+import greenbookapi.domain.app.PayloadPair
+import greenbookapi.domain.app.Reporter
 import greenbookapi.service.LocationService
+import greenbookapi.util.JsonRequestParsingUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.RestController
 
@@ -27,15 +30,19 @@ class LocationController {
     @RequestMapping(value = "/create", method = RequestMethod.POST,
             consumes = 'application/json')
     String create(@RequestBody String payload) throws Exception {
-        String report = ''
-        service.createNewReport(report)
+        try {
+            PayloadPair pair = JsonRequestParsingUtil.parsePayloadBody(payload)
+            'Successfully created report for location: ' + pair.location.name +
+                    'and reporter with ID: ' + pair.reporter.id
 
-        'Successfully created report'
+        } catch (Exception e) {
+            'Error happened processing your request: ' + e.printStackTrace()
+        }
     }
 
     @RequestMapping(value = "/retrieve", method = RequestMethod.GET,
             consumes = 'application/json')
     List<Location> retrieve(@RequestBody String payload) throws Exception {
-        service.getAllLocations(payload)
+
     }
 }

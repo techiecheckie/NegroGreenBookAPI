@@ -50,7 +50,7 @@ class Location {
     @Column(name='state')
     String state
     @Column(name='zip_code')
-    String zipCode
+    String zipCode = null
 
     // How many ppl reported it?
     @Column(name='amt_reported')
@@ -71,8 +71,8 @@ class Location {
 
     }
 
-    protected Location(String name, String address, Date date, String city,
-                       String state, String zipCode, String type) {
+    Location(String name, String address, Date date, String city,
+                       String state, String type) {
         this.name = name
         this.firstReportDate = date
         // When first creating, first and last report date are the same
@@ -80,7 +80,6 @@ class Location {
         this.address = address
         this.city = city
         this.state = state
-        this.zipCode = zipCode
         primaryType = determinePrimaryBusinessType(type)
     }
 

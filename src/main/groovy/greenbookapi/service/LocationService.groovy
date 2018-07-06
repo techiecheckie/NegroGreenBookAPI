@@ -1,6 +1,8 @@
 package greenbookapi.service
 
 import greenbookapi.domain.app.Location
+import greenbookapi.domain.app.PayloadPair
+import greenbookapi.domain.app.Reporter
 import greenbookapi.repository.LocationRepository
 import greenbookapi.repository.ReporterRepository
 import greenbookapi.util.JsonRequestParsingUtil
@@ -22,14 +24,18 @@ class LocationService {
     @Autowired
     protected ReporterRepository repRepo
 
-    void createNewReport(HashMap<String, Object> payload) {
-        HashMap<String, Object> map = JsonRequestParsingUtil.parseReportBody(payload)
-        // Do further parsing to save
-        locRepo.save()
+    void createNewLocation(PayloadPair pair) {
+        try {
+            repRepo.save(pair.getReporter())
+            locRepo.save(pair.getLocation())
+        }
+        catch(Exception e) {
+            println('Failed to save new location:')
+            e.printStackTrace()
+        }
     }
 
-    List<Location> getAllLocations(HashMap<String, Object> payload){
-        HashMap<String, Object> map = JsonRequestParsingUtil.parseMappingInfoForLocation(payload)
+    List<Location> getAllLocations(){
         List<Location> locList = locRepo.findAll()
         return locList
     }
