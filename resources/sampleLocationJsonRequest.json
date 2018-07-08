@@ -2,7 +2,7 @@
   "request-id": "1234567890123456789",
   "location": {
     "name": "Very Bad Business",
-    "primary-type": "BUSINESS",
+    "primary-type": "Business",
     "address": "1313 Dead End Drive",
     "city": "Crap City",
     "state": "AL",
@@ -10,9 +10,9 @@
   },
   "reporter": {
     "id": "9018372659",
+    "isUsian": "y",
     "phone-country-code": "+1",
     "city": "City Town",
-    "state": "AL",
-    "zip-code": "123456"
+    "state": "AL"
   }
 }
