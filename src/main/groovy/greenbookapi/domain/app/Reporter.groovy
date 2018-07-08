@@ -19,6 +19,7 @@ import javax.persistence.Table
 @Table(name = 'reporter', schema = 'greenbookapi')
 class Reporter {
 
+    // ID is either a phone number or an email.
     @Id
     @Column(name='id')
     String id
@@ -27,8 +28,9 @@ class Reporter {
     @Column(name='created_date')
     Date dateCreated
 
+    //TODO: Change country code in JSONs to int.
     @Column(name='phone_country_code')
-    String phoneCountryCode
+    int phoneCountryCode
 
     @Column(name='city')
     String city
@@ -42,9 +44,12 @@ class Reporter {
     @Column(name='confidence')
     String tag = GreenBookConstants.UNVERIFIED
 
+    //TODO: Make it possible to assign more than one report to a reporter.
+
     protected Reporter() {}
 
-    Reporter(String phoneNum, Date date, String pcc, String city, String state) {
+/*For mobile users*/
+    Reporter(String phoneNum, Date date, int pcc, String city, String state) {
         this.id = phoneNum
         this.dateCreated = date
         this.phoneCountryCode = pcc
@@ -53,10 +58,26 @@ class Reporter {
         this.country = 'US'
     }
 
-    Reporter(String phoneNum, Date date, String pcc, String country) {
+    Reporter(String phoneNum, Date date, int pcc, String country) {
         this.id = phoneNum
         this.dateCreated = date
         this.phoneCountryCode = pcc
+        this.country = country
+    }
+
+
+/* For web users*/
+    Reporter(String email, Date date, String city, String state) {
+        this.id = email
+        this.dateCreated = date
+        this.city = city
+        this.state = state
+        this.country = 'US'
+    }
+
+    Reporter(String email, Date date, String country) {
+        this.id = email
+        this.dateCreated = date
         this.country = country
     }
 }

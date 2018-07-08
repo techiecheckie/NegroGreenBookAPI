@@ -13,10 +13,8 @@ import org.springframework.stereotype.Repository
 @Repository
 interface LocationRepository extends JpaRepository<Location, Long>{
     List<Location> findByCityAndState(String city, String state)
-    List<Location> findByZipCode(String zipCode)
 
     List<Location> findByPrimaryTypeAndCityAndState(String primaryType, String city, String state)
-    List<Location> findByPrimaryTypeAndZipCode(String primaryType, String zipCode)
 
     //TODO: At some point allow ppl to define a profile that they want to search on?
 }

@@ -49,8 +49,6 @@ class Location {
     String city
     @Column(name='state')
     String state
-    @Column(name='zip_code')
-    String zipCode = null
 
     // How many ppl reported it?
     @Column(name='amt_reported')

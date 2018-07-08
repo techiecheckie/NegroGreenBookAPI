@@ -1,8 +1,5 @@
 package greenbookapi.domain.app
 
-import greenbookapi.repository.LocationRepository
-import greenbookapi.repository.ReporterRepository
-
 /**
  * Created by Riley on 7/6/2018.
  *
