@@ -1,9 +1,11 @@
 package greenbookapi.util
 
 import greenbookapi.common.GreenBookConstants
+import greenbookapi.domain.app.Business
 import greenbookapi.domain.app.Location
 import greenbookapi.domain.app.PayloadPair
 import greenbookapi.domain.app.Reporter
+import greenbookapi.domain.app.Town
 import groovy.json.JsonSlurper
 
 /**
@@ -14,17 +16,14 @@ import groovy.json.JsonSlurper
 
 class JsonRequestParsingUtil {
 
+    //TODO: Update JSON docs to reflect these changes
     private static Location parseWebLocationPayload(HashMap<String, String> location) {
         Location loc
-        if (location.get('primary-type') != GreenBookConstants.TOWN) {
-            loc = new Location(location.get('name'), location.get('address'), new Date(),
-                    location.get('city'), location.get('state'), location.get('primary-type'))
-            if (location.get('secondary-type')!= '') {
-                loc.setSecondaryType(location.get('secondary-type'))
-            }
+        if (location.get('primary-type') == GreenBookConstants.BUSINESS) {
+            loc = new Business(location.get('name'), location.get('address'), new Date(),
+                    location.get('city'), location.get('state'), location.get('type'))
         } else {
-            loc = new Location(location.get('name'), null, new Date(),
-                    location.get('city'), location.get('state'), location.get('primary-type'))
+            loc = new Town(new Date(), location.get('city'), location.get('state'), location.get('type'))
         }
 
         return loc

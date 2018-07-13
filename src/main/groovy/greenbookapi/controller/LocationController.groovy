@@ -32,7 +32,7 @@ class LocationController {
     String create(@RequestBody String payload) throws Exception {
         try {
             PayloadPair pair = JsonRequestParsingUtil.parsePayloadBody(payload)
-            'Successfully created report for location: ' + pair.location.name +
+            'Successfully created report for location: ' + pair.location +
                     'and reporter with ID: ' + pair.reporter.id
 
         } catch (Exception e) {
@@ -42,7 +42,7 @@ class LocationController {
 
     @RequestMapping(value = "/retrieve", method = RequestMethod.GET,
             consumes = 'application/json')
-    List<Location> retrieve(@RequestBody String payload) throws Exception {
+    String retrieve(@RequestBody String payload) throws Exception {
 
     }
 }

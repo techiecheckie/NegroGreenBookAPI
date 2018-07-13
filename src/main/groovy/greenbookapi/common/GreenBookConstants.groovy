@@ -9,23 +9,21 @@ package greenbookapi.common
 
 class GreenBookConstants {
 
-    /* Location Primary Type */
-    //static final enum BusinessType {BUSINESS, TOWN, ATTRACTION, MEDFACILITY}
-
-        // Any type of business.
-    static final String BUSINESS = 'Business'
-        // An entire town/city/municipality.
+    // An entire town/city/municipality.
     static final String TOWN = 'Town'
+    static final String COUNTY = 'County'
+
+    static final String BUSINESS = 'Business'
         // Museums, parks, music halls, etc.
     static final String ATTRACTION = 'Attraction'
         // Medical Establishments
     static final String MEDFACILITY = 'Medical Facility'
-
-    /* Location Secondary Types For Businesses */
+        // Educational Facility
+    static final String EDFACILITY = 'Educational Facility'
         // Specific hotels, inns, hostels, etc.
     static final String LODGING = 'Lodging'
         // Anywhere whose primary focus is to serve food/drink, including bars.
-    static final String FOOD = 'Food/Drink'
+    static final String RESTAURANT = 'Restaurant/Bar'
         // Convenience/Gas
     static final String GAS = 'Convenience/Gas'
         // A business that doesn't do any of the above.
