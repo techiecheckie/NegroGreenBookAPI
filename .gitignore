@@ -4,4 +4,4 @@
 build/
 out/
 .env
-/resources
+resources/
