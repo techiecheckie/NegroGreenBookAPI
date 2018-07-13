@@ -65,12 +65,22 @@ class Location {
     @Column(name='confidence')
     String confidenceTag = GreenBookConstants.UNVERIFIED
 
+    @Column(name='offender1')
+    String offender1
+
+    @Column(name='offender2')
+    String offender2
+
+    @Column(name='offender3')
+    String offender3
+
     protected Location(){
 
     }
 
+    /* Web Users */
     Location(String name, String address, Date date, String city,
-                       String state, String type) {
+             String state, String type) {
         this.name = name
         this.firstReportDate = date
         // When first creating, first and last report date are the same
@@ -81,7 +91,24 @@ class Location {
         primaryType = determinePrimaryBusinessType(type)
     }
 
+    Location(String name, String address, Date date, String city,
+                       String state, String type, String type2) {
+        this.name = name
+        this.firstReportDate = date
+        // When first creating, first and last report date are the same
+        this.lastReportDate = date
+        this.address = address
+        this.city = city
+        this.state = state
+        primaryType = determinePrimaryBusinessType(type)
+        secondaryType = determineSecondaryBusinessType(type2)
+    }
+
     static private String determinePrimaryBusinessType(String type) {
+        return type
+    }
+
+    static private String determineSecondaryBusinessType(String type) {
         return type
     }
 }

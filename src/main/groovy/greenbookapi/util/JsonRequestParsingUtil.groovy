@@ -14,7 +14,7 @@ import groovy.json.JsonSlurper
 
 class JsonRequestParsingUtil {
 
-    private static Location parseLocationPayload(HashMap<String, String> location) {
+    private static Location parseWebLocationPayload(HashMap<String, String> location) {
         Location loc
         if (location.get('primary-type') != GreenBookConstants.TOWN) {
             loc = new Location(location.get('name'), location.get('address'), new Date(),
@@ -30,13 +30,11 @@ class JsonRequestParsingUtil {
         return loc
     }
 
-    private static Reporter parseReporterPayload(HashMap<String, String> reporter){
+    private static Reporter parseWebReporterPayload(HashMap<String, String> reporter){
         Reporter rep
-        if (reporter.get('isUsian') == 'y') {
-            rep = new Reporter(reporter.get('id'), new Date(), reporter.get('city'), reporter.get('state'))
-        } else {
-            rep = new Reporter(reporter.get('id'), new Date(), reporter.get('country'))
-        }
+
+        rep = new Reporter(reporter.get('id'), reporter.get('hashPass'), new Date())
+
         rep
     }
 
@@ -49,7 +47,7 @@ class JsonRequestParsingUtil {
 
         HashMap<String, String> reporter = map.reporter
 
-        PayloadPair pair = new PayloadPair(parseReporterPayload(reporter), parseLocationPayload(location))
+        PayloadPair pair = new PayloadPair(parseWebReporterPayload(reporter), parseWebLocationPayload(location))
 
         pair
     }

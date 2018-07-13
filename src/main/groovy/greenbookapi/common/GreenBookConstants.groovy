@@ -51,7 +51,7 @@ class GreenBookConstants {
         // Includes alt-right fuckers
     static final String YTSUPREMACISTS = 'High White Supremacist Presence'
 
-    /* Town Alerts */
+    /* Town Secondary Types */
     static final String ARRESTS = 'High Instances of PoC Arrests'
     static final String NOPOC = 'Low PoC Population'
     static final String GOPVOTERS = 'High GOP Population'

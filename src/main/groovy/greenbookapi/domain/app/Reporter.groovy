@@ -24,6 +24,9 @@ class Reporter {
     @Column(name='id')
     String id
 
+    @Column(name='hash_password')
+    String hashPass
+
     @CreatedDate
     @Column(name='created_date')
     Date dateCreated
@@ -48,7 +51,30 @@ class Reporter {
 
     protected Reporter() {}
 
-/*For mobile users*/
+    /* For web users*/
+    Reporter(String email, String hashPass, Date date) {
+        this.id = email
+        this.hashPass = hashPass
+        this.dateCreated = date
+    }
+
+    Reporter(String email, String hashPass, Date date, String city, String state) {
+        this.id = email
+        this.hashPass = hashPass
+        this.dateCreated = date
+        this.city = city
+        this.state = state
+        this.country = 'US'
+    }
+
+    Reporter(String email, String hashPass, Date date, String country) {
+        this.id = email
+        this.hashPass = hashPass
+        this.dateCreated = date
+        this.country = country
+    }
+
+    /*For mobile users*/
     Reporter(String phoneNum, Date date, int pcc, String city, String state) {
         this.id = phoneNum
         this.dateCreated = date
@@ -62,22 +88,6 @@ class Reporter {
         this.id = phoneNum
         this.dateCreated = date
         this.phoneCountryCode = pcc
-        this.country = country
-    }
-
-
-/* For web users*/
-    Reporter(String email, Date date, String city, String state) {
-        this.id = email
-        this.dateCreated = date
-        this.city = city
-        this.state = state
-        this.country = 'US'
-    }
-
-    Reporter(String email, Date date, String country) {
-        this.id = email
-        this.dateCreated = date
         this.country = country
     }
 }

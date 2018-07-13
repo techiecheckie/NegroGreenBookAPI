@@ -6,7 +6,8 @@
     "address": "1313 Dead End Drive",
     "city": "Crap City",
     "state": "AL",
-    "secondary-type": ""
+    "secondary-type": "",
+    "offenders": []
   },
   "reporter": {
     "id": "email@email.com",
