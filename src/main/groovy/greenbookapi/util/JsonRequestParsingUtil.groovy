@@ -33,10 +33,9 @@ class JsonRequestParsingUtil {
     private static Reporter parseReporterPayload(HashMap<String, String> reporter){
         Reporter rep
         if (reporter.get('isUsian') == 'y') {
-            rep = new Reporter(reporter.get('id'), new Date(), reporter.get('phone-country-code'),
-                    reporter.get('city'), reporter.get('state'))
+            rep = new Reporter(reporter.get('id'), new Date(), reporter.get('city'), reporter.get('state'))
         } else {
-            rep = new Reporter(reporter.get('id'), new Date(), reporter.get('phone-country-code'), reporter.get('country'))
+            rep = new Reporter(reporter.get('id'), new Date(), reporter.get('country'))
         }
         rep
     }
