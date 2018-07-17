@@ -8,27 +8,29 @@ package greenbookapi.common
  */
 
 class GreenBookConstants {
-
-    /* Location Primary Type */
-    //static final enum BusinessType {BUSINESS, TOWN, ATTRACTION, MEDFACILITY}
-
-        // Any type of business.
+    /* Location Types */
     static final String BUSINESS = 'Business'
-        // An entire town/city/municipality.
+        // Note that Town and County are still TOWN objects.
     static final String TOWN = 'Town'
+    static final String COUNTY = 'County'
+
+    /* Item Types for Towns */
+    static final String INCIDENTS = 'High Amount of Incidents'
+    static final String NOPOC = 'Low PoC Population'
+    static final String GOPVOTERS = 'High GOP Population'
+    static final String SUNDOWN = 'Sundown Town'
+    static final String OTHERTOWN = 'Other Town'
+
+    /* Item types for Businesses */
         // Museums, parks, music halls, etc.
     static final String ATTRACTION = 'Attraction'
-        // Medical Establishments
     static final String MEDFACILITY = 'Medical Facility'
-
-    /* Location Secondary Types For Businesses */
+    static final String EDFACILITY = 'Educational Facility'
         // Specific hotels, inns, hostels, etc.
     static final String LODGING = 'Lodging'
         // Anywhere whose primary focus is to serve food/drink, including bars.
-    static final String FOOD = 'Food/Drink'
-        // Convenience/Gas
+    static final String RESTAURANT = 'Restaurant/Bar'
     static final String GAS = 'Convenience/Gas'
-        // A business that doesn't do any of the above.
     static final String OTHERBUSINESS = 'Other Business'
 
     /* Offenders -- Reasons they suck */
@@ -51,17 +53,20 @@ class GreenBookConstants {
         // Includes alt-right fuckers
     static final String YTSUPREMACISTS = 'High White Supremacist Presence'
 
-    /* Town Secondary Types */
-    static final String ARRESTS = 'High Instances of PoC Arrests'
-    static final String NOPOC = 'Low PoC Population'
-    static final String GOPVOTERS = 'High GOP Population'
-    static final String SUNDOWN = 'Sundown Town'
-
     /* Confidence tag types */
     static final String VERIFIED = 'Verified'
     static final String UNVERIFIED = 'Unverified'
     static final String SUSPICIOUS = 'Suspicious'
 
+    /* Street Endings */
+    static final String STR = 'str'
+    static final String RD = 'rd'
+    static final String CIR = 'circle'
+    static final String BLVD = 'blvd'
+    static final String AVE = 'ave'
+    static final String PL = 'pl'
+    static final String LN = 'ln'
+    static final String DR = 'dr'
 
 
 

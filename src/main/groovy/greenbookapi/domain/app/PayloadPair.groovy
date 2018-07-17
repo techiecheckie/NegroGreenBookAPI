@@ -11,10 +11,17 @@ class PayloadPair {
 
     Reporter reporter
 
+    PopUpReport popUpReport
+
     Location location
 
     PayloadPair(Reporter rep, Location loc) {
         reporter = rep
         location = loc
+    }
+
+    PayloadPair(Reporter rep, PopUpReport pop) {
+        reporter = rep
+        popUpReport = pop
     }
 }

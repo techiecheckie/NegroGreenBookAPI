@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service
 /**
  * Created by Riley on 7/3/2018.
  *
- * Connects the LocationController to the data.
+ * Connects the LocationController to the Location data.
  */
 
 @Service

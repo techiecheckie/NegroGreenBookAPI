@@ -1,6 +1,7 @@
 package greenbookapi.domain.app
 
-import greenbookapi.common.PopConstants
+import greenbookapi.common.GreenBookConstants
+
 import greenbookapi.util.FormatUtil
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
@@ -11,8 +12,14 @@ import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.Table
 
+/**
+ * Created by Riley on 7/3/2018.
+ *
+ * For short time alerts on checkpoints or high police presence.
+ */
+
 @Entity
-@Table(name = 'location', schema = 'nofreezepops')
+@Table(name = 'alert', schema = 'nofreezepops')
 class PopUpReport {
 
     @Id
@@ -21,13 +28,16 @@ class PopUpReport {
 
     // Date it was first reported
     @CreatedDate
-    @Column(name='first_report_date')
+    @Column(name = 'first_report_date')
     Date firstReportDate
 
     // Date it was last reported
     @LastModifiedDate
-    @Column(name='last_report_date')
+    @Column(name = 'last_report_date')
     Date lastReportDate
+
+    @Column(name = 'alert_type')
+    String alertType
 
     @Column(name = 'city')
     String city
@@ -42,13 +52,8 @@ class PopUpReport {
     @Column(name = 'street1')
     String street1Name
 
-    //TODO: Limit this string to its possible options
-    //String street1Ending
-
     @Column(name = 'street2')
     String street2Name
-
-    //String street2Ending
 
     // Assigned at creation.
     // TODO: Make it possible to assign more than one reporter.
@@ -57,10 +62,10 @@ class PopUpReport {
 
     // Will just use one tag for now, will have lists later
     @Column(name = 'tag')
-    String tag = PopConstants.UNVERIFIED
+    String tag = GreenBookConstants.UNVERIFIED
 
     @Column(name='amt_reported')
-    int amtReported = 0
+    int amtReported = 1
 
     // For Spring JPA to use.
     protected PopUpReport(){
@@ -79,7 +84,6 @@ class PopUpReport {
         this.street1Name = FormatUtil.stripSpecialCharacters(str1n)
         this.street2Name = FormatUtil.stripSpecialCharacters(str2n)
         this.reporterId = repId
-        tag = PopConstants.UNVERIFIED
-        amtReported = 1
+        tag = GreenBookConstants.UNVERIFIED
     }
 }

@@ -5,14 +5,9 @@
     "primary-type": "Business",
     "address": "1313 Dead End Drive",
     "city": "Crap City",
-    "state": "AL",
-    "secondary-type": ""
+    "state": "AL"
   },
   "reporter": {
-    "id": "9018372659",
-    "isUsian": "y",
-    "phone-country-code": "1",
-    "city": "City Town",
-    "state": "AL"
+    "id": "email@email.com"
   }
 }
