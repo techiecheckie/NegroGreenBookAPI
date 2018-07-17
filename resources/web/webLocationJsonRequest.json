@@ -1,16 +1,15 @@
 {
   "request-id": "1234567890123456789",
   "location": {
-    "name": "Very Bad Business",
-    "primary-type": "Business",
+    "name": "Very Bad Restaurant",
+    "location-type": "Business",
+    "item-type": "Restaurant",
     "address": "1313 Dead End Drive",
     "city": "Crap City",
     "state": "AL",
-    "secondary-type": "",
-    "offenders": []
+    "offenders": ["RACISM"]
   },
   "reporter": {
-    "id": "email@email.com",
-    "hashPass": "someHashedPass"
+    "id": "email@email.com"
   }
 }

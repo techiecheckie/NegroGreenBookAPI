@@ -1,9 +1,8 @@
 package greenbookapi.controller
 
-import greenbookapi.domain.app.Location
 import greenbookapi.domain.app.PayloadPair
-import greenbookapi.domain.app.Reporter
 import greenbookapi.service.LocationService
+import greenbookapi.service.PopUpReportService
 import greenbookapi.util.JsonRequestParsingUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.RestController
@@ -23,16 +22,32 @@ import org.springframework.web.bind.annotation.RequestMethod
 class LocationController {
 
     @Autowired
-    protected LocationService service
+    protected LocationService locService
 
-    //TODO: Determine what the JSON should look like
-    //Does this need to return a response entity?
-    @RequestMapping(value = "/create", method = RequestMethod.POST,
+    @Autowired
+    protected PopUpReportService prService
+
+    //TODO: Add other endpoints
+
+    @RequestMapping(value = "/create-location", method = RequestMethod.POST,
             consumes = 'application/json')
-    String create(@RequestBody String payload) throws Exception {
+    String createLocation(@RequestBody String payload) throws Exception {
         try {
-            PayloadPair pair = JsonRequestParsingUtil.parsePayloadBody(payload)
+            PayloadPair pair = JsonRequestParsingUtil.parseLocationPayloadBody(payload)
             'Successfully created report for location: ' + pair.location +
+                    'and reporter with ID: ' + pair.reporter.id
+
+        } catch (Exception e) {
+            'Error happened processing your request: ' + e.printStackTrace()
+        }
+    }
+
+    @RequestMapping(value = "/create-alert", method = RequestMethod.POST,
+            consumes = 'application/json')
+    String createAlert(@RequestBody String payload) throws Exception {
+        try {
+            PayloadPair pair = JsonRequestParsingUtil.parseAlertPayloadBody(payload)
+            'Successfully created report for alert: ' + pair.popUpReport +
                     'and reporter with ID: ' + pair.reporter.id
 
         } catch (Exception e) {

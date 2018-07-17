@@ -4,41 +4,45 @@ import greenbookapi.common.GreenBookConstants
 import greenbookapi.domain.app.Business
 import greenbookapi.domain.app.Location
 import greenbookapi.domain.app.PayloadPair
+import greenbookapi.domain.app.PopUpReport
 import greenbookapi.domain.app.Reporter
 import greenbookapi.domain.app.Town
 import groovy.json.JsonSlurper
 
 /**
- * Created by Riley on 7/3/2018.
+ * Created by Riley on 7/7/2018.
  *
  * Parses the JSON Requests this app can receive.
  */
 
 class JsonRequestParsingUtil {
 
-    //TODO: Update JSON docs to reflect these changes
+    //TODO: Add offender storage
     private static Location parseWebLocationPayload(HashMap<String, String> location) {
         Location loc
-        if (location.get('primary-type') == GreenBookConstants.BUSINESS) {
+        if (location.get('location-type') == GreenBookConstants.BUSINESS) {
             loc = new Business(location.get('name'), location.get('address'), new Date(),
-                    location.get('city'), location.get('state'), location.get('type'))
+                    location.get('city'), location.get('state'), location.get('item-type'))
         } else {
-            loc = new Town(new Date(), location.get('city'), location.get('state'), location.get('type'))
+            loc = new Town(new Date(), location.get('city'), location.get('state'), location.get('item-type'))
         }
 
-        return loc
+        loc
     }
 
     private static Reporter parseWebReporterPayload(HashMap<String, String> reporter){
         Reporter rep
 
-        rep = new Reporter(reporter.get('id'), reporter.get('hashPass'), new Date())
+        rep = new Reporter(reporter.get('id'))
 
         rep
     }
 
-    /* For /report/create */
-    static PayloadPair parsePayloadBody(String payload) {
+    private static PopUpReport parseWebAlertPayload(HashMap<String, String> alert) {
+        null
+    }
+
+    static PayloadPair parseLocationPayloadBody(String payload) {
 
         def map = new JsonSlurper().parseText(payload) as Map
 
@@ -51,7 +55,21 @@ class JsonRequestParsingUtil {
         pair
     }
 
-    /* For /report/retrieve */
+    static PayloadPair parseAlertPayloadBody(String payload) {
+
+        def map = new JsonSlurper().parseText(payload) as Map
+
+        HashMap<String, String> alert = map.pop_report
+
+        HashMap<String, String> reporter = map.reporter
+
+        PayloadPair pair = new PayloadPair(parseWebReporterPayload(reporter), parseWebAlertPayload(alert))
+
+        pair
+    }
+
+
+/* For /report/retrieve */
     HashMap<String, String> parseMappingInfoForLocation(String payload) {
 
     }

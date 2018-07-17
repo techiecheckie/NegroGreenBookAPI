@@ -18,7 +18,7 @@ import javax.persistence.Table
  */
 
 @Entity
-@Table(name = 'Business', schema = 'greenbookapi')
+@Table(name = 'town', schema = 'greenbookapi')
 class Town extends Location{
 
     @Id

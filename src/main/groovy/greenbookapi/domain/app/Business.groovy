@@ -13,12 +13,11 @@ import javax.persistence.Table
 /**
  * Created by Riley on 7/3/2018.
  *
- * Main Spring JPA object.
- * Memo to me: Is there built in work for doing searching on lists or nah?
+ * JPA object for Businesses.
  */
 
 @Entity
-@Table(name = 'Business', schema = 'greenbookapi')
+@Table(name = 'business', schema = 'greenbookapi')
 class Business extends Location{
 
     @Id
@@ -88,6 +87,10 @@ class Business extends Location{
 
     static private String determinePrimaryBusinessType(String type) {
         return type
+    }
+
+    protected void addReporter() {
+        this.amtReported = this.amtReported+1
     }
 
 }
