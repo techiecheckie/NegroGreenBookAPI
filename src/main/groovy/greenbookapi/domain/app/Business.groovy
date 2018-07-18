@@ -68,13 +68,16 @@ class Business extends Location{
     @Column(name='offender3')
     String offender3
 
+    @Column(name='reporter_id')
+    String reporter
+
     protected Business(){
 
     }
 
     /* Web Users */
     Business(String name, String address, Date date, String city,
-             String state, String type) {
+             String state, String type, String repId) {
         this.name = name
         this.firstReportDate = date
         // When first creating, first and last report date are the same
@@ -83,6 +86,7 @@ class Business extends Location{
         this.city = city
         this.state = state
         this.type = determinePrimaryBusinessType(type)
+        this.reporter = repId
     }
 
     static private String determinePrimaryBusinessType(String type) {
