@@ -40,5 +40,13 @@ class LocationService {
         return locList
     }
 
+    List<Location> getByCityState(String city, String state) {
+        List<Location> locList = locRepo.findByCityAndState(city, state)
+        return locList
+    }
 
+    Location getById(long id) {
+        Location loc = locRepo.findById(id)
+        return loc
+    }
 }

@@ -58,7 +58,7 @@ class PopUpReport {
     // Assigned at creation.
     // TODO: Make it possible to assign more than one reporter.
     @Column(name = 'reporter_id')
-    String reporterId
+    String reporter
 
     // Will just use one tag for now, will have lists later
     @Column(name = 'tag')
@@ -72,18 +72,18 @@ class PopUpReport {
     }
 
     // For testing purposes.
-    PopUpReport(long id, Date date, String city, String state, String time,
+    PopUpReport(Date date, String city, String state, String time, String alert,
                 String str1n, String str2n, String repId){
 
-        this.id = id
         this.firstReportDate = date
         this.lastReportDate = date
         this.city = city
         this.state = state
         this.time = time
+        this.alertType = alert
         this.street1Name = FormatUtil.stripSpecialCharacters(str1n)
         this.street2Name = FormatUtil.stripSpecialCharacters(str2n)
-        this.reporterId = repId
+        this.reporter = repId
         tag = GreenBookConstants.UNVERIFIED
     }
 }

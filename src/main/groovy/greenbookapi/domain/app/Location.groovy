@@ -6,5 +6,4 @@ package greenbookapi.domain.app
  * Abstract class to manage Business and Town objects collectively.
  */
 
-abstract class Location {
-}
+abstract class Location {}
