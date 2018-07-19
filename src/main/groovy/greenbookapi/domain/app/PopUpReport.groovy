@@ -24,7 +24,7 @@ class PopUpReport {
 
     @Id
     @GeneratedValue
-    Long id
+    String id
 
     // Date it was first reported
     @CreatedDate

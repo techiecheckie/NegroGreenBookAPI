@@ -1,11 +1,14 @@
 package greenbookapi.service
 
+import greenbookapi.common.GreenBookConstants
+import greenbookapi.domain.app.Business
 import greenbookapi.domain.app.Location
 import greenbookapi.domain.app.PayloadPair
-import greenbookapi.domain.app.Reporter
-import greenbookapi.repository.LocationRepository
+import greenbookapi.domain.app.Town
+import greenbookapi.repository.BusinessRepository
+
 import greenbookapi.repository.ReporterRepository
-import greenbookapi.util.JsonRequestParsingUtil
+import greenbookapi.repository.TownRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -19,7 +22,10 @@ import org.springframework.stereotype.Service
 class LocationService {
 
     @Autowired
-    protected LocationRepository locRepo
+    protected BusinessRepository busRepo
+
+    @Autowired
+    protected TownRepository townRepo
 
     @Autowired
     protected ReporterRepository repRepo
@@ -27,7 +33,11 @@ class LocationService {
     void createNewLocation(PayloadPair pair) {
         try {
             repRepo.save(pair.getReporter())
-            locRepo.save(pair.getLocation())
+            if (pair.getLocation() instanceof Business) {
+                busRepo.save((Business) pair.getLocation())
+            } else if (pair.getLocation() instanceof Town) {
+                townRepo.save((Town) pair.getLocation())
+            }
         }
         catch(Exception e) {
             println('Failed to save new location:')
@@ -35,18 +45,33 @@ class LocationService {
         }
     }
 
-    List<Location> getAllLocations(){
-        List<Location> locList = locRepo.findAll()
-        return locList
-    }
-
     List<Location> getByCityState(String city, String state) {
-        List<Location> locList = locRepo.findByCityAndState(city, state)
+        List<Location> locList = busRepo.findByCityAndState(city, state)
+        locList.addAll(townRepo.findByCityAndState(city, state))
         return locList
     }
 
-    Location getById(long id) {
-        Location loc = locRepo.findById(id)
+    Location getById(String id, String type) {
+        Optional<Location> opLoc
+        Location loc = null
+        if (type == GreenBookConstants.BUSINESS) {
+            opLoc = busRepo.findById(id)
+            if (opLoc.present) {
+                loc = opLoc.get()
+            }
+        } else if (type == GreenBookConstants.TOWN) {
+            opLoc = townRepo.findById(id)
+            if (opLoc.present) {
+                loc = opLoc.get()
+            }
+        }
+
         return loc
+    }
+
+    List<Location> getByReporterId(String repId) {
+        List<Location> locList = busRepo.findByReporter(repId)
+        locList.addAll(townRepo.findByReporter(repId))
+        return locList
     }
 }

@@ -1,5 +1,6 @@
 package greenbookapi.service
 
+import greenbookapi.common.GreenBookConstants
 import greenbookapi.domain.app.PayloadPair
 import greenbookapi.domain.app.PopUpReport
 import greenbookapi.repository.PopUpReportRepository
@@ -39,4 +40,17 @@ class PopUpReportService {
         return popList
     }
 
+    PopUpReport getById(String id) {
+        Optional<PopUpReport> pur = popRepo.findById(id)
+        PopUpReport popReport = null
+        if (pur.present) {
+            popReport = pur.get()
+        }
+
+        popReport
+    }
+
+    List<PopUpReport> getByCityState(String city, String state) {
+        popRepo.findByCityAndState(city, state)
+    }
 }

@@ -39,8 +39,8 @@ class GreenBookConstants {
     static final String HOMOPHOBIA = 'Homophobia'
     static final String TRANSPHOBIA = 'General Transphobia'
     static final String TRANSMISOGYNY = 'Transmisogyny'
-    static final String MIABLEISM = 'Ableism: Mental/Neurological Disabilities'
-    static final String PHYABLEISM = 'Ableism: Physical Disabilities'
+    static final String MIABLEISM = 'Ableism: Mental'
+    static final String PHYABLEISM = 'Ableism: Physical'
     static final String MISOSGYNY = 'General Misogyny'
     static final String MISOGYNOIR = 'Misogynoir'
     static final String FATPHOBIA = 'Fatphobia'
@@ -51,7 +51,7 @@ class GreenBookConstants {
     static final String KKK = 'KKK Presence'
     static final String POLICE = 'High Police Presence'
         // Includes alt-right fuckers
-    static final String YTSUPREMACISTS = 'High White Supremacist Presence'
+    static final String YTSUPREMACISTS = 'High white Supremacist Presence'
 
     /* Confidence tag types */
     static final String VERIFIED = 'Verified'

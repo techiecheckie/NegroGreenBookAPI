@@ -1,8 +1,5 @@
 package greenbookapi.domain.app
 
-import greenbookapi.common.GreenBookConstants
-import org.springframework.data.annotation.CreatedDate
-
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id

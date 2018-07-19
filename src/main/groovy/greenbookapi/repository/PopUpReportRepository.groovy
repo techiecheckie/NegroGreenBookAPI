@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository
  */
 
 @Repository
-interface PopUpReportRepository extends JpaRepository<PopUpReport, Long> {
+interface PopUpReportRepository extends JpaRepository<PopUpReport, String> {
 
     // Already implemented through Spring JPA
     List<PopUpReport> findByCityAndState(String city, String state)

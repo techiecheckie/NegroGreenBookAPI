@@ -7,9 +7,7 @@ import greenbookapi.domain.app.PayloadPair
 import greenbookapi.domain.app.PopUpReport
 import greenbookapi.domain.app.Reporter
 import greenbookapi.domain.app.Town
-import greenbookapi.service.LocationService
 import groovy.json.JsonSlurper
-import org.springframework.beans.factory.annotation.Autowired
 
 /**
  * Created by Riley on 7/7/2018.
@@ -18,9 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired
  */
 
 class JsonRequestParsingUtil {
-
-    @Autowired
-    LocationService locService
 
     //TODO: Add offender storage
     private static Location parseWebLocationPayload(HashMap<String, String> location, String repId) {
@@ -76,16 +71,38 @@ class JsonRequestParsingUtil {
         pair
     }
 
-//    static String parseLocationSearchPayload(String payload) {
-//        def map = new JsonSlurper().parseText(payload) as Map
-//
-//        HashMap<String, String> location = map.pop_report.location
-//
-//    }
-
-/* For /report/retrieve */
-    HashMap<String, String> parseMappingInfoForLocation(String payload) {
-
+    //TODO: Implement these Request Parsing functions.
+    static String parseLocationIdBody(String payload) {
+        null
     }
+
+    static String parseAlertIdBody(String payload) {
+        null
+    }
+
+    static String parseLocationCity(String payload) {
+        null
+    }
+
+    static String parseLocationState(String payload) {
+        null
+    }
+
+    static String parseAlertState(String payload) {
+        null
+    }
+
+    static String parseAlertCity(String payload) {
+        null
+    }
+
+    static String parseReporterId(String payload) {
+        null
+    }
+
+    static String parseLocationTypeBody(String payload) {
+        null
+    }
+
 
 }
