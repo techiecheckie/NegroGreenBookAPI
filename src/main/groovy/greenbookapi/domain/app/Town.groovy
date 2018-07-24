@@ -31,13 +31,13 @@ class Town extends Location{
     @NonNull
     @CreatedDate
     @Column(name='first_report_date')
-    Date firstReportDate
+    String firstReportDate
 
     // Date it was last reported
     @NonNull
     @LastModifiedDate
     @Column(name='last_report_date')
-    Date lastReportDate
+    String lastReportDate
 
     // City or county
     // City+State+Type combo must be unique
@@ -49,17 +49,23 @@ class Town extends Location{
     @Column(name='state')
     String state
 
-    // Town/County
+    // either TOWN or COUNTY
     @NonNull
-    @Column(name='type')
-    String type
+    @Column(name='location_type')
+    String locationType
+
+    // One of 'High Amount of Incidents', 'Low PoC Population', 'High GOP Population',
+    // 'Sundown Town', 'Other Town'
+    @NonNull
+    @Column(name='item_type')
+    String itemType
 
     // How many ppl reported it?
     @NonNull
     @Column(name='amt_reported')
     int amtReported = 1
 
-    @Column(name='confidence')
+    @Column(name='confidence_tag')
     @NonNull
     String confidenceTag = GreenBookConstants.UNVERIFIED
 
@@ -75,16 +81,22 @@ class Town extends Location{
     @Column(name='offender3')
     String offender3
 
+    @NonNull
+    @Column(name='reporter_id')
+    String reporter
+
     protected Town(){
 
     }
 
-    Town(Date date, String city, String state, String type){
+    Town(String date, String city, String state, String locType, String itemType, String repId){
         this.firstReportDate = date
         this.lastReportDate = date
         this.city = city
         this.state = state
-        this.type = determineTownType(type)
+        this.locationType = locType
+        this.itemType = determineTownType(itemType)
+        this.reporter = repId
     }
 
     static private String determineTownType(String type) {

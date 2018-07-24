@@ -21,7 +21,7 @@ interface PopUpReportRepository extends JpaRepository<PopUpReport, String> {
     List<PopUpReport> findByCityAndStateOrderByLastReportDateDesc(String city, String state)
 
     // Will be used for abuse management and to find stale reports.
-    List<PopUpReport> findByReporterId(String reporterId)
+    List<PopUpReport> findByReporter(String reporterId)
     List<PopUpReport> findByLastReportDateOrderByLastReportDateDesc(Date date)
 
     //Saving functions already included here.

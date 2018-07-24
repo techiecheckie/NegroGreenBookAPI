@@ -35,13 +35,13 @@ class Business extends Location{
     @NonNull
     @CreatedDate
     @Column(name='first_report_date')
-    Date firstReportDate
+    String firstReportDate
 
     // Date it was last reported
     @NonNull
     @LastModifiedDate
     @Column(name='last_report_date')
-    Date lastReportDate
+    String lastReportDate
 
     @NonNull
     @Column(name='address')
@@ -61,26 +61,31 @@ class Business extends Location{
     @Column(name='amt_reported')
     int amtReported = 1
 
+    // Always BUSINESS
+    @NonNull
+    @Column(name='location_type')
+    String locationType
+
     // Attraction, Medical Facility, Educational Facility,
     // Restaurant/Bar, Gas/Convenience, Lodging, Other
     @NonNull
-    @Column(name='type')
-    String type
+    @Column(name='item_type')
+    String itemType
 
     @NonNull
-    @Column(name='confidence')
+    @Column(name='confidence_tag')
     String confidenceTag = GreenBookConstants.UNVERIFIED
 
     @NonNull
-    @Column(name='offender1')
+    @Column(name='offender_1')
     String offender1
 
     @Nullable
-    @Column(name='offender2')
+    @Column(name='offender_2')
     String offender2
 
     @Nullable
-    @Column(name='offender3')
+    @Column(name='offender_3')
     String offender3
 
     @NonNull
@@ -92,7 +97,7 @@ class Business extends Location{
     }
 
     /* Web Users */
-    Business(String name, String address, Date date, String city,
+    Business(String name, String address, String date, String city,
              String state, String type, String repId) {
         this.name = name
         this.firstReportDate = date
@@ -101,11 +106,12 @@ class Business extends Location{
         this.address = address
         this.city = city
         this.state = state
-        this.type = determinePrimaryBusinessType(type)
+        this.locationType = GreenBookConstants.BUSINESS
+        this.itemType = determineBusinessType(type)
         this.reporter = repId
     }
 
-    static private String determinePrimaryBusinessType(String type) {
+    static private String determineBusinessType(String type) {
         return type
     }
 

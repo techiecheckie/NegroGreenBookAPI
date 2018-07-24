@@ -7,12 +7,17 @@ package greenbookapi.common
  * Constants used for various object fields.
  */
 
-class GreenBookConstants {
+final class GreenBookConstants {
     /* Location Types */
     static final String BUSINESS = 'Business'
         // Note that Town and County are still TOWN objects.
     static final String TOWN = 'Town'
     static final String COUNTY = 'County'
+
+    /* Alert Types for Alerts */
+    static final String CHECKPOINT = 'ICE Checkpoint'
+    static final String POLICENOW = 'Police Activity'
+
 
     /* Item Types for Towns */
     static final String INCIDENTS = 'High Amount of Incidents'

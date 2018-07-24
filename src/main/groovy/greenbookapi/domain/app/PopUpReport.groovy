@@ -29,12 +29,12 @@ class PopUpReport {
     // Date it was first reported
     @CreatedDate
     @Column(name = 'first_report_date')
-    Date firstReportDate
+    String firstReportDate
 
     // Date it was last reported
     @LastModifiedDate
     @Column(name = 'last_report_date')
-    Date lastReportDate
+    String lastReportDate
 
     @Column(name = 'alert_type')
     String alertType
@@ -46,13 +46,13 @@ class PopUpReport {
     String state
 
     //TODO: Make time from date
-    @Column(name = 'time')
+    @Column(name = 'reported_time')
     String time
 
-    @Column(name = 'street1')
+    @Column(name = 'street_1')
     String street1Name
 
-    @Column(name = 'street2')
+    @Column(name = 'street_2')
     String street2Name
 
     // Assigned at creation.
@@ -61,7 +61,7 @@ class PopUpReport {
     String reporter
 
     // Will just use one tag for now, will have lists later
-    @Column(name = 'tag')
+    @Column(name = 'confidence_tag')
     String tag = GreenBookConstants.UNVERIFIED
 
     @Column(name='amt_reported')
@@ -72,7 +72,7 @@ class PopUpReport {
     }
 
     // For testing purposes.
-    PopUpReport(Date date, String city, String state, String time, String alert,
+    PopUpReport(String date, String city, String state, String time, String alert,
                 String str1n, String str2n, String repId){
 
         this.firstReportDate = date

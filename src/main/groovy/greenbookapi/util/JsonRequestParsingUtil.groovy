@@ -17,14 +17,23 @@ import groovy.json.JsonSlurper
 
 class JsonRequestParsingUtil {
 
+    private static String getCurrentDate(Date date) {
+        FormatUtil.convertDateToString(date)
+    }
+
+    private static String getCurrentTime(Date date) {
+        FormatUtil.extractTimeFromDate(date)
+    }
     //TODO: Add offender storage
     private static Location parseWebLocationPayload(HashMap<String, String> location, String repId) {
         Location loc
+        Date date = new Date()
+        String sDate = getCurrentDate(date)
         if (location.get('location_type') == GreenBookConstants.BUSINESS) {
-            loc = new Business(location.get('name'), location.get('address'), new Date(),
+            loc = new Business(location.get('name'), location.get('address'), sDate,
                     location.get('city'), location.get('state'), location.get('item_type'), repId)
         } else {
-            loc = new Town(new Date(), location.get('city'), location.get('state'), location.get('item_type'))
+            loc = new Town(sDate, location.get('city'), location.get('state'), location.get('location_type'), location.get('item_type'), repId)
         }
 
         loc
@@ -37,7 +46,9 @@ class JsonRequestParsingUtil {
     }
 
     private static PopUpReport parseWebAlertPayload(HashMap<String, String> alert, HashMap<String, String> loc, String repId) {
-        PopUpReport pur = new PopUpReport(new Date(), loc.get('city'), loc.get('state'), alert.get('time_reported'),
+        Date date = new Date()
+        String sDate = getCurrentDate(date)
+        PopUpReport pur = new PopUpReport(sDate, loc.get('city'), loc.get('state'), alert.get('time_reported'),
                 alert.get('alert_type'), loc.get('street1'), loc.get('street2'), repId)
 
         pur
@@ -71,38 +82,64 @@ class JsonRequestParsingUtil {
         pair
     }
 
-    //TODO: Implement these Request Parsing functions.
     static String parseLocationIdBody(String payload) {
-        null
+        def map = new JsonSlurper().parseText(payload) as Map
+        HashMap<String, String> location = map.location
+
+        location.get('id')
     }
 
     static String parseAlertIdBody(String payload) {
-        null
+        def map = new JsonSlurper().parseText(payload) as Map
+
+        HashMap<String, String> alert = map.pop_alert
+
+        alert.get('id')
     }
 
     static String parseLocationCity(String payload) {
-        null
+        def map = new JsonSlurper().parseText(payload) as Map
+
+        HashMap<String, String> location = map.location
+        location.get('city')
     }
 
     static String parseLocationState(String payload) {
-        null
+        def map = new JsonSlurper().parseText(payload) as Map
+
+        HashMap<String, String> location = map.location
+
+        location.get('state')
     }
 
     static String parseAlertState(String payload) {
-        null
+        def map = new JsonSlurper().parseText(payload) as Map
+
+        HashMap<String, String> alert = map.pop_alert
+
+        alert.get('state')
     }
 
     static String parseAlertCity(String payload) {
-        null
+        def map = new JsonSlurper().parseText(payload) as Map
+
+        HashMap<String, String> alert = map.pop_alert
+
+        alert.get('city')
     }
 
     static String parseReporterId(String payload) {
-        null
+        def map = new JsonSlurper().parseText(payload) as Map
+        HashMap<String, String> reporter = map.reporter
+        reporter.get('id')
     }
 
     static String parseLocationTypeBody(String payload) {
-        null
-    }
+        def map = new JsonSlurper().parseText(payload) as Map
 
+        HashMap<String, String> location = map.location
+
+        location.get('type')
+    }
 
 }
