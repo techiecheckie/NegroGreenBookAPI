@@ -1,5 +1,9 @@
 package greenbookapi.domain.app
 
+import com.fasterxml.jackson.annotation.JsonGetter
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import greenbookapi.common.GreenBookConstants
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
@@ -18,6 +22,7 @@ import javax.persistence.Table
  * JPA object for Businesses.
  */
 
+@JsonPropertyOrder(['id','firstReportDate', 'lastReportDate', 'amtReported', 'locationType', 'itemType'])
 @Entity
 @Table(name = 'business', schema = 'greenbookapi')
 class Business extends Location{
@@ -76,21 +81,44 @@ class Business extends Location{
     @Column(name='confidence_tag')
     String confidenceTag = GreenBookConstants.UNVERIFIED
 
+    @JsonIgnore
     @NonNull
     @Column(name='offender_1')
     String offender1
 
+    @JsonIgnore
     @Nullable
     @Column(name='offender_2')
     String offender2
 
+    @JsonIgnore
     @Nullable
     @Column(name='offender_3')
     String offender3
 
+    @JsonIgnore
     @NonNull
     @Column(name='reporter_id')
     String reporter
+
+    @JsonGetter('offenders')
+    List<String> getOffenders(){
+        List<String> list = new ArrayList<>()
+        list.add(offender1)
+        if (offender2) {
+            list.add(offender2)
+            if (offender3){
+                list.add(offender3)
+            }
+        }
+        list
+    }
+
+    @JsonGetter('reporter')
+    Reporter getReporterForJsonFormat(){
+        Reporter rep = new Reporter(reporter)
+        rep
+    }
 
     protected Business(){
 

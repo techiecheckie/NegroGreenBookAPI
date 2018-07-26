@@ -28,6 +28,9 @@ class LocationController {
     @Autowired
     protected PopUpReportService prService
 
+    /**
+     * FOR LOCATIONS
+     */
     @RequestMapping(value = "/create-location", method = RequestMethod.POST,
             consumes = 'application/json')
     String createLocation(@RequestBody String payload) throws Exception {
@@ -42,41 +45,13 @@ class LocationController {
         }
     }
 
-    @RequestMapping(value = "/create-alert", method = RequestMethod.POST,
-            consumes = 'application/json')
-    String createAlert(@RequestBody String payload) throws Exception {
-        try {
-            PayloadPair pair = JsonRequestParsingUtil.parseAlertPayloadBody(payload)
-            prService.createNewAlert(pair)
-            'Successfully created report for alert: ' + pair.popUpReport +
-                    'and reporter with ID: ' + pair.reporter.id
-
-        } catch (Exception e) {
-            'Error happened processing your request: ' + e.printStackTrace()
-        }
-    }
-
-
     @RequestMapping(value = "/retrieve-location-by-id", method = RequestMethod.GET,
             consumes = 'application/json')
     String retrieveLocationById(@RequestBody String payload) throws Exception {
         try {
             String locId = JsonRequestParsingUtil.parseLocationIdBody(payload)
             String locType = JsonRequestParsingUtil.parseLocationTypeBody(payload)
-            String response = JsonResponseBuildingUtil.createJsonForLocById(locService.getById(locId, locType))
-            response
-        }
-        catch(Exception e) {
-            'Error happened processing your request: ' + e.printStackTrace()
-        }
-    }
-
-    @RequestMapping(value = "/retrieve-alert-by-id", method = RequestMethod.GET,
-            consumes = 'application/json')
-    String retrieveAlertById(@RequestBody String payload) throws Exception {
-        try {
-            String alertId = JsonRequestParsingUtil.parseAlertIdBody(payload)
-            String response = JsonResponseBuildingUtil.createJsonForAlertById(prService.getById(alertId))
+            String response = JsonResponseBuildingUtil.createJsonForLocationList(Arrays.asList(locService.getById(locId, locType)))
             response
         }
         catch(Exception e) {
@@ -98,20 +73,6 @@ class LocationController {
         }
     }
 
-    @RequestMapping(value = "/retrieve-alert-by-city-state", method = RequestMethod.GET,
-            consumes = 'application/json')
-    String retrieveAlertsByCityState(@RequestBody String payload) throws Exception {
-        try {
-            String city = JsonRequestParsingUtil.parseAlertCity(payload)
-            String state = JsonRequestParsingUtil.parseAlertState(payload)
-            String response = JsonResponseBuildingUtil.createJsonForAlertByCityState(prService.getByCityState(city, state))
-            response
-        }
-        catch(Exception e) {
-            'Error happened processing your request: ' + e.printStackTrace()
-        }
-    }
-
     @RequestMapping(value = "/retrieve-location-by-reporter", method = RequestMethod.GET,
             consumes = 'application/json')
     String retrieveLocationsByReporter(@RequestBody String payload) throws Exception {
@@ -123,4 +84,49 @@ class LocationController {
             'Error happened processing your request: ' + e.printStackTrace()
         }
     }
+
+    /**
+     * FOR ALERT
+     */
+    @RequestMapping(value = "/create-alert", method = RequestMethod.POST,
+            consumes = 'application/json')
+    String createAlert(@RequestBody String payload) throws Exception {
+        try {
+            PayloadPair pair = JsonRequestParsingUtil.parseAlertPayloadBody(payload)
+            prService.createNewAlert(pair)
+            'Successfully created report for alert: ' + pair.popUpReport +
+                    'and reporter with ID: ' + pair.reporter.id
+
+        } catch (Exception e) {
+            'Error happened processing your request: ' + e.printStackTrace()
+        }
+    }
+
+    @RequestMapping(value = "/retrieve-alert-by-id", method = RequestMethod.GET,
+            consumes = 'application/json')
+    String retrieveAlertById(@RequestBody String payload) throws Exception {
+        try {
+            String alertId = JsonRequestParsingUtil.parseAlertIdBody(payload)
+            String response = JsonResponseBuildingUtil.createJsonForAlertList(Arrays.asList(prService.getById(alertId)))
+            response
+        }
+        catch(Exception e) {
+            'Error happened processing your request: ' + e.printStackTrace()
+        }
+    }
+
+    @RequestMapping(value = "/retrieve-alert-by-city-state", method = RequestMethod.GET,
+            consumes = 'application/json')
+    String retrieveAlertsByCityState(@RequestBody String payload) throws Exception {
+        try {
+            String city = JsonRequestParsingUtil.parseAlertCity(payload)
+            String state = JsonRequestParsingUtil.parseAlertState(payload)
+            String response = JsonResponseBuildingUtil.createJsonForAlertList(prService.getByCityState(city, state))
+            response
+        }
+        catch(Exception e) {
+            'Error happened processing your request: ' + e.printStackTrace()
+        }
+    }
+
 }

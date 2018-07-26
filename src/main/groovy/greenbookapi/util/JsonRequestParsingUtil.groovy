@@ -24,16 +24,37 @@ class JsonRequestParsingUtil {
     private static String getCurrentTime(Date date) {
         FormatUtil.extractTimeFromDate(date)
     }
-    //TODO: Add offender storage
+
     private static Location parseWebLocationPayload(HashMap<String, String> location, String repId) {
         Location loc
         Date date = new Date()
         String sDate = getCurrentDate(date)
+        List<String> offenders = location.get('offenders')
         if (location.get('location_type') == GreenBookConstants.BUSINESS) {
             loc = new Business(location.get('name'), location.get('address'), sDate,
                     location.get('city'), location.get('state'), location.get('item_type'), repId)
+            if (offenders?.size() == 1) {
+                loc.offender1 = offenders.get(0)
+            } else if (offenders?.size() == 2) {
+                loc.offender1 = offenders.get(0)
+                loc.offender2 = offenders.get(1)
+            } else if (offenders?.size() == 3) {
+                loc.offender1 = offenders.get(0)
+                loc.offender2 = offenders.get(1)
+                loc.offender3 = offenders.get(2)
+            }
         } else {
             loc = new Town(sDate, location.get('city'), location.get('state'), location.get('location_type'), location.get('item_type'), repId)
+            if (offenders?.size() == 1) {
+                loc.offender1 = offenders.get(0)
+            } else if (offenders?.size() == 2) {
+                loc.offender1 = offenders.get(0)
+                loc.offender2 = offenders.get(1)
+            } else if (offenders?.size() == 3) {
+                loc.offender1 = offenders.get(0)
+                loc.offender2 = offenders.get(1)
+                loc.offender3 = offenders.get(2)
+            }
         }
 
         loc
@@ -46,10 +67,19 @@ class JsonRequestParsingUtil {
     }
 
     private static PopUpReport parseWebAlertPayload(HashMap<String, String> alert, HashMap<String, String> loc, String repId) {
-        Date date = new Date()
-        String sDate = getCurrentDate(date)
-        PopUpReport pur = new PopUpReport(sDate, loc.get('city'), loc.get('state'), alert.get('time_reported'),
+        List<String> offenders = alert.get('offenders')
+        PopUpReport pur = new PopUpReport(alert.get('date_reported'), loc.get('city'), loc.get('state'), alert.get('time_reported'),
                 alert.get('alert_type'), loc.get('street1'), loc.get('street2'), repId)
+        if (offenders?.size() == 1) {
+            pur.offender1 = offenders.get(0)
+        } else if (offenders?.size() == 2) {
+            pur.offender1 = offenders.get(0)
+            pur.offender2 = offenders.get(1)
+        } else if (offenders?.size() == 3) {
+            pur.offender1 = offenders.get(0)
+            pur.offender2 = offenders.get(1)
+            pur.offender3 = offenders.get(2)
+        }
 
         pur
     }

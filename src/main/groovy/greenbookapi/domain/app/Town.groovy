@@ -1,5 +1,8 @@
 package greenbookapi.domain.app
 
+import com.fasterxml.jackson.annotation.JsonGetter
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import greenbookapi.common.GreenBookConstants
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
@@ -19,6 +22,7 @@ import javax.persistence.Table
  * Memo to me: Is there built in work for doing searching on lists or nah?
  */
 
+@JsonPropertyOrder(['id','firstReportDate', 'lastReportDate', 'amtReported', 'locationType', 'itemType'])
 @Entity
 @Table(name = 'town', schema = 'greenbookapi')
 class Town extends Location{
@@ -69,14 +73,17 @@ class Town extends Location{
     @NonNull
     String confidenceTag = GreenBookConstants.UNVERIFIED
 
+    @JsonIgnore
     @NonNull
     @Column(name='offender1')
     String offender1
 
+    @JsonIgnore
     @Nullable
     @Column(name='offender2')
     String offender2
 
+    @JsonIgnore
     @Nullable
     @Column(name='offender3')
     String offender3
@@ -85,6 +92,25 @@ class Town extends Location{
     @Column(name='reporter_id')
     String reporter
 
+    /* For JSON Formatting */
+    @JsonGetter('offenders')
+    List<String> getOffenders(){
+        List<String> list = new ArrayList<>()
+        list.add(offender1)
+        if (offender2) {
+            list.add(offender2)
+            if (offender3){
+                list.add(offender3)
+            }
+        }
+        list
+    }
+
+    @JsonGetter('reporter')
+    Reporter getReporterForJsonFormat(){
+        Reporter rep = new Reporter(reporter)
+        rep
+    }
     protected Town(){
 
     }
