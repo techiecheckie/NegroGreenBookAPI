@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonGetter
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import greenbookapi.common.GreenBookConstants
+import org.hibernate.annotations.Type
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.lang.NonNull
@@ -12,7 +13,6 @@ import org.springframework.lang.Nullable
 import javax.persistence.Column
 import javax.persistence.Id
 import javax.persistence.Entity
-import javax.persistence.GeneratedValue
 import javax.persistence.Table
 
 /**
@@ -28,8 +28,8 @@ import javax.persistence.Table
 class Town extends Location{
 
     @Id
-    @GeneratedValue
-    String id
+    @NonNull
+    String id = UUID.randomUUID().toString()
 
     // Date it was first reported
     @NonNull
@@ -112,7 +112,6 @@ class Town extends Location{
         rep
     }
     protected Town(){
-
     }
 
     Town(String date, String city, String state, String locType, String itemType, String repId){

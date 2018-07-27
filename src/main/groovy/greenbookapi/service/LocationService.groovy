@@ -9,6 +9,7 @@ import greenbookapi.repository.BusinessRepository
 
 import greenbookapi.repository.ReporterRepository
 import greenbookapi.repository.TownRepository
+import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service
  * Connects the LocationController to the Location data.
  */
 
+@Slf4j
 @Service
 class LocationService {
 
@@ -35,43 +37,63 @@ class LocationService {
             repRepo.save(pair.getReporter())
             if (pair.getLocation() instanceof Business) {
                 busRepo.save((Business) pair.getLocation())
+                log.info('Saved business: ' + (Business) pair.getLocation())
             } else if (pair.getLocation() instanceof Town) {
                 townRepo.save((Town) pair.getLocation())
+                log.info('Saved town: ' + (Town) pair.getLocation())
             }
         }
         catch(Exception e) {
-            println('Failed to save new location:')
-            e.printStackTrace()
+            log.error('Failed to save new location:' + e.getStackTrace())
         }
     }
 
     List<Location> getByCityState(String city, String state) {
-        List<Location> locList = busRepo.findByCityAndState(city, state)
-        locList.addAll(townRepo.findByCityAndState(city, state))
-        return locList
+        List<Location> locList = new ArrayList<>()
+        try {
+            locList = busRepo.findByCityAndState(city, state)
+            locList.addAll(townRepo.findByCityAndState(city, state))
+            log.info('Retrieved locations by city state.')
+        }
+        catch(Exception e) {
+            log.error('Failed to get location by city state:' + e.getStackTrace())
+        }
+        locList
     }
 
     Location getById(String id, String type) {
         Optional<Location> opLoc
         Location loc = null
-        if (type == GreenBookConstants.BUSINESS) {
-            opLoc = busRepo.findById(id)
-            if (opLoc.present) {
-                loc = opLoc.get()
+        try {
+            if (type == GreenBookConstants.BUSINESS) {
+                opLoc = busRepo.findById(id)
+                if (opLoc.present) {
+                    loc = opLoc.get()
+                }
+            } else if (type == GreenBookConstants.TOWN) {
+                opLoc = townRepo.findById(id)
+                if (opLoc.present) {
+                    loc = opLoc.get()
+                }
             }
-        } else if (type == GreenBookConstants.TOWN) {
-            opLoc = townRepo.findById(id)
-            if (opLoc.present) {
-                loc = opLoc.get()
-            }
+            log.info('Retrieved location by id.')
         }
-
-        return loc
+        catch (Exception e) {
+            log.error('Failed to get location by id:' + e.getStackTrace())
+        }
+        loc
     }
 
     List<Location> getByReporterId(String repId) {
-        List<Location> locList = busRepo.findByReporter(repId)
-        locList.addAll(townRepo.findByReporter(repId))
-        return locList
+        List<Location> locList = new ArrayList<>()
+        try {
+            locList = busRepo.findByReporter(repId)
+            locList.addAll(townRepo.findByReporter(repId))
+            log.info('Retrieved location by reporter id.')
+        }
+        catch (Exception e) {
+            log.error('Failed to get location by reporter id:' + e.getStackTrace())
+        }
+        locList
     }
 }

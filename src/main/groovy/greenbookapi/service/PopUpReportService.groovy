@@ -5,6 +5,7 @@ import greenbookapi.domain.app.PayloadPair
 import greenbookapi.domain.app.PopUpReport
 import greenbookapi.repository.PopUpReportRepository
 import greenbookapi.repository.ReporterRepository
+import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service
  * Connects the LocationController to the alert data.
  */
 
+@Slf4j
 @Service
 class PopUpReportService {
 
@@ -28,29 +30,48 @@ class PopUpReportService {
         try {
             repRepo.save(pair.getReporter())
             popRepo.save(pair.getPopUpReport())
+            log.info('Saved new alert.')
         }
         catch(Exception e) {
-            println('Failed to save new alert:')
-            e.printStackTrace()
+            log.error('Failed to save new alert:'+ e.getStackTrace())
+
         }
     }
 
     List<PopUpReport> getAllAlerts(){
-        List<PopUpReport> popList = popRepo.findAll()
-        return popList
+        List<PopUpReport> popList = new ArrayList<>()
+        try {
+            popRepo.findAll()
+            log.info('Retrieved all alerts.')
+        }
+        catch (Exception e) {
+            log.error('Failed to get all alerts: ' + e.getStackTrace())
+        }
+        popList
     }
 
     PopUpReport getById(String id) {
         Optional<PopUpReport> pur = popRepo.findById(id)
         PopUpReport popReport = null
-        if (pur.present) {
-            popReport = pur.get()
+        try {
+            if (pur.present) {
+                popReport = pur.get()
+            }
+            log.info('Retrieved alert by id.')
         }
-
+        catch (Exception e) {
+            log.error('Failed to get alert by id: ' + e.getStackTrace())
+        }
         popReport
     }
 
     List<PopUpReport> getByCityState(String city, String state) {
-        popRepo.findByCityAndState(city, state)
+        try {
+            popRepo.findByCityAndState(city, state)
+            log.info('Retrieved alerts by city state.')
+        }
+        catch (Exception e) {
+            log.error('Failed to get alert by city state: ' + e.getStackTrace())
+        }
     }
 }

@@ -13,7 +13,6 @@ import org.springframework.lang.Nullable
 import javax.persistence.Column
 import javax.persistence.Id
 import javax.persistence.Entity
-import javax.persistence.GeneratedValue
 import javax.persistence.Table
 
 /**
@@ -28,8 +27,8 @@ import javax.persistence.Table
 class Business extends Location{
 
     @Id
-    @GeneratedValue
-    String id
+    @NonNull
+    String id = UUID.randomUUID().toString()
 
     // Name of the establishment
     @NonNull

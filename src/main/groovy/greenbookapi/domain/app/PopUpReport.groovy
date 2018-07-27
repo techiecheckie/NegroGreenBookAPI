@@ -14,7 +14,6 @@ import org.springframework.lang.Nullable
 
 import javax.persistence.Column
 import javax.persistence.Entity
-import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.Table
 
@@ -30,8 +29,8 @@ import javax.persistence.Table
 class PopUpReport {
 
     @Id
-    @GeneratedValue
-    String id
+    @NonNull
+    String id = UUID.randomUUID().toString()
 
     // Date it was first reported
     @JsonIgnore

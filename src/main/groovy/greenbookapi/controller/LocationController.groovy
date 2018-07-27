@@ -5,6 +5,7 @@ import greenbookapi.service.LocationService
 import greenbookapi.service.PopUpReportService
 import greenbookapi.util.JsonRequestParsingUtil
 import greenbookapi.util.JsonResponseBuildingUtil
+import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.RestController
 
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod
  * Rest Controller that receives requests and then forwards them back to the front end.
  */
 
+
+@Slf4j
 @RestController
 @RequestMapping('/report')
 class LocationController {
@@ -37,11 +40,13 @@ class LocationController {
         try {
             PayloadPair pair = JsonRequestParsingUtil.parseLocationPayloadBody(payload)
             locService.createNewLocation(pair)
+            log.info('Successfully created report for location: ' + pair.location +
+                    'and reporter with ID: ' + pair.reporter.id)
             'Successfully created report for location: ' + pair.location +
                     'and reporter with ID: ' + pair.reporter.id
-
         } catch (Exception e) {
-            'Error happened processing your request: ' + e.printStackTrace()
+            log.error('Error creating a location: ' + e.getStackTrace())
+            'Error happened processing your request.'
         }
     }
 
@@ -52,10 +57,12 @@ class LocationController {
             String locId = JsonRequestParsingUtil.parseLocationIdBody(payload)
             String locType = JsonRequestParsingUtil.parseLocationTypeBody(payload)
             String response = JsonResponseBuildingUtil.createJsonForLocationList(Arrays.asList(locService.getById(locId, locType)))
+            log.info('Successfully received: '+ response)
             response
         }
         catch(Exception e) {
-            'Error happened processing your request: ' + e.printStackTrace()
+            log.error('Error retrieving location: ' + e.getStackTrace())
+            'Error happened processing your request.'
         }
     }
 
@@ -66,10 +73,12 @@ class LocationController {
             String city = JsonRequestParsingUtil.parseLocationCity(payload)
             String state = JsonRequestParsingUtil.parseLocationState(payload)
             String response = JsonResponseBuildingUtil.createJsonForLocationList(locService.getByCityState(city, state))
+            log.info('Successfully retrieved location by city/state: '+ response)
             response
         }
         catch(Exception e) {
-            'Error happened processing your request: ' + e.printStackTrace()
+            log.error('Error happened retrieving location by city/state: ' + e.getStackTrace())
+            'Error happened processing your request.'
         }
     }
 
@@ -79,9 +88,11 @@ class LocationController {
         try {
             String repId = JsonRequestParsingUtil.parseReporterId(payload)
             String response = JsonResponseBuildingUtil.createJsonForLocationList(locService.getByReporterId(repId))
+            log.info('Successfully retrieved location by reporter: '+ response)
             response
         } catch (Exception e) {
-            'Error happened processing your request: ' + e.printStackTrace()
+            log.error('Error happened retrieving location by reporter: ' + e.getStackTrace())
+            'Error happened processing your request.'
         }
     }
 
@@ -94,11 +105,14 @@ class LocationController {
         try {
             PayloadPair pair = JsonRequestParsingUtil.parseAlertPayloadBody(payload)
             prService.createNewAlert(pair)
+            log.info('Successfully created report for alert: ' + pair.popUpReport +
+                    'and reporter with ID: ' + pair.reporter.id)
             'Successfully created report for alert: ' + pair.popUpReport +
                     'and reporter with ID: ' + pair.reporter.id
 
         } catch (Exception e) {
-            'Error happened processing your request: ' + e.printStackTrace()
+            log.error('Error happened creating alert: ' + e.getStackTrace())
+            'Error happened processing your request.'
         }
     }
 
@@ -108,10 +122,12 @@ class LocationController {
         try {
             String alertId = JsonRequestParsingUtil.parseAlertIdBody(payload)
             String response = JsonResponseBuildingUtil.createJsonForAlertList(Arrays.asList(prService.getById(alertId)))
+            log.info('Successfully retrieved alert by id: ' + response)
             response
         }
         catch(Exception e) {
-            'Error happened processing your request: ' + e.printStackTrace()
+            log.error('Error happened retrieving alert by id: ' + e.getStackTrace())
+            'Error happened processing your request.'
         }
     }
 
@@ -122,10 +138,12 @@ class LocationController {
             String city = JsonRequestParsingUtil.parseAlertCity(payload)
             String state = JsonRequestParsingUtil.parseAlertState(payload)
             String response = JsonResponseBuildingUtil.createJsonForAlertList(prService.getByCityState(city, state))
+            log.info('Successfully retrieved alert by city/state: ' + response)
             response
         }
         catch(Exception e) {
-            'Error happened processing your request: ' + e.printStackTrace()
+            log.error('Error happened retrieving alert by city/state: ' + e.getStackTrace())
+            'Error happened processing your request.'
         }
     }
 
